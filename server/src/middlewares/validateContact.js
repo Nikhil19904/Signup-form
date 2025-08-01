@@ -1,0 +1,17 @@
+// src/middlewares/validateContact.js
+
+module.exports = function validateContact(req, res, next) {
+  const { name, email, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  // Basic email format check
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ error: "Invalid email format" });
+  }
+
+  next(); // All good, proceed to route handler
+};
